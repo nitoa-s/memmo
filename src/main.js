@@ -26,8 +26,25 @@ const createWindow = () => {
         if (result.canceled) return ''
         const path = result.filePaths[0]
         const file = fs.readFileSync(path)
-        console.log(file)
         return file.toString()
+      })
+  })
+  ipcMain.on('save-file', (_event, saveText) => {
+    console.log(saveText)
+    return dialog
+      .showSaveDialog(mainWindow, {
+        title: '保存',
+        filters: [
+          {
+            name: 'Document',
+            extensions: ['txt']
+          }
+        ],
+      })
+      .then((result) => {
+        if (result.canceled) return
+        saveFilePath = result.filePath
+        fs.writeFileSync(saveFilePath, saveText)
       })
   })
   mainWindow.loadFile('src/index.html')
