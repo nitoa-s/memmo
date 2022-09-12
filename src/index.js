@@ -3,7 +3,6 @@ const saveButton = document.getElementById('save-button')
 const memoArea = document.getElementById('memo-area')
 openButton.addEventListener('click', async () => {
   const text = await window.versions.openFile()
-  console.log(text)
   memoArea.value = text
 })
 
