@@ -1,4 +1,5 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+const fs = require('fs')
 const path = require('path')
 
 const createWindow = () => {
@@ -9,7 +10,26 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-  ipcMain.handle('ping', () => 'pong')
+  ipcMain.handle('open-file', () => {
+    return dialog
+      .showOpenDialog(mainWindow, {
+        title: 'ファイルを開く',
+        filters: [
+          {
+            name: 'Document',
+            extensions: ['txt']
+          }
+        ],
+        properties: ['openFile']
+      })
+      .then((result) => {
+        if (result.canceled) return ''
+        const path = result.filePaths[0]
+        const file = fs.readFileSync(path)
+        console.log(file)
+        return file.toString()
+      })
+  })
   mainWindow.loadFile('src/index.html')
 }
 
