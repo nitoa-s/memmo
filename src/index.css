@@ -1,0 +1,15 @@
+html,
+body {
+  height: 80%;
+}
+
+#memo-area {
+  resize: none;
+  width: 80%;
+  height: 80%;
+  display: block;
+}
+
+.text-area {
+  height: 100%;
+}

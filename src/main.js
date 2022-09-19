@@ -50,7 +50,7 @@ const createWindow = () => {
   mainWindow.loadFile('src/index.html')
 
   // メニューバーを非表示にする
-  mainWindow.setMenuBarVisibility(false)
+  // mainWindow.setMenuBarVisibility(false)
 }
 
 
